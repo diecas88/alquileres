@@ -26,22 +26,24 @@ def descripcion_inmueble(link):
             
             try:
 
-                unique_id = parsed.xpath(UNIQUE_ID)[1]
-                title = parsed.xpath(TITLE)[0]
-                price = parsed.xpath(PRICE)[2]
-                descrip = ' '.join(parsed.xpath(DESCRIPTION))
-                add_info = '--'.join(parsed.xpath(ADD_INFO))
-                charact = '--'.join(parsed.xpath(CHARACTERISTICS))
+                unique_id = parsed.xpath(UNIQUE_ID)[1].replace('\n','').replace(',','')
+                title = parsed.xpath(TITLE)[0].replace('\n','').replace(',','')
+                price = parsed.xpath(PRICE)[2].replace('\n','').replace(',','')
+                descrip = ' '.join(parsed.xpath(DESCRIPTION)).replace('\n','').replace(',','')
+                add_info = '--'.join(parsed.xpath(ADD_INFO)).replace('\n','').replace(',','')
+                habitaciones = parsed.xpath(CHARACTERISTICS)[0]
+                banos = parsed.xpath(CHARACTERISTICS)[2]
+                mtr2 = parsed.xpath(CHARACTERISTICS)[4]
 
 
             except IndexError:
                 return
 
             with open('../raw/data_raw.txt', 'a', encoding='utf-8') as f:
-                f.write('"' + unique_id + '","' + title + '","' + price + '","' + descrip + '","' + add_info + '","' + charact + '"')
+                
+                f.write('"' + unique_id + '","' + title + '","' + price + '","' + descrip + '","' + add_info + '","' + habitaciones + '","' + banos + '","' + mtr2 + '"')
                 f.write('\n')
                 f.close()
-
 
         else:
             raise ValueError(f'Error: {response.status_code}')

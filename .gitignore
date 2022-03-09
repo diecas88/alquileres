@@ -1,1 +1,5 @@
 venv1/*
+data/raw/*
+*.txt
+*.csv
+notebooks/.ipynb_checkpoints/*
